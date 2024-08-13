@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Message Sender</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        #whatsappForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 150px; /* Adjust the height as needed */
+            resize: vertical; /* Allow vertical resizing only */
+        }
+        input:focus, textarea:focus {
+            border-color: #25d366;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #25d366;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #20b558;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="formContainer">
+        <h1>Send a WhatsApp Message</h1>
+        <form id="whatsappForm">
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="tel" id="phoneNumber" placeholder="Enter phone number" required>
+
+            <label for="message">Message:</label>
+            <textarea id="message" rows="6" placeholder="Enter your message" required></textarea>
+
+            <button type="button" onclick="sendMessage()">Send</button>
+        </form>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const message = document.getElementById('message').value;
+
+            // Ensure the phone number is in the correct format
+            if (!phoneNumber.match(/^\d+$/)) {
+                alert('Please enter a valid phone number.');
+                return;
+            }
+
+            // Encode the message to be URL safe
+            const encodedMessage = encodeURIComponent(message);
+
+            // Construct the WhatsApp API URL
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+
+            // Open the URL in a new tab
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+
+</body>
+</html>
